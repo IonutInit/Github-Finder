@@ -18,7 +18,7 @@ function Navbar({title}: {title: string}) {
                     <Link to='/' className='btn btn-ghost btn-sm rounded-btn'>
                         Home
                     </Link>
-                    <Link to='/' className='btn btn-ghost btn-sm rounded-btn'>
+                    <Link to='/About' className='btn btn-ghost btn-sm rounded-btn'>
                         About
                     </Link>
                 </div>
