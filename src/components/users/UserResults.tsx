@@ -2,11 +2,7 @@ import {useEffect, useState} from 'react'
 import Spinner from '../layout/Spinner'
 import UserItem from './UserItem'
 
-type Users = {
-    [key: string]: string | number
-    //the above is an index signature which handles each key in a generalised manner
-    // login: string
-}
+import { Users } from '../../types'
 
 function UserResults() {
     const [users, setUsers] = useState<Users[]>([])

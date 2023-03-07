@@ -1,8 +1,27 @@
-import { PropsWithChildren } from "react"
+import {Link} from 'react-router-dom'
+import { Users } from "../../types"
 
-function UserItem({user}: PropsWithChildren<Users>) {
+function UserItem({user: {login, avatar_url}}: {user: Users}) {
   return (
-    <div>{user.login}</div>
+    <div className="card shadow-md compact side bg-base-100">
+      <div className="flex-row items-center space-x-4 card-body">
+        <div>
+          <div className="avatar">
+            <div className="rounded-full shadow w-14 h-14">
+              <img src={avatar_url as string} alt="profile image"/>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 className="card-title">
+            {login}
+          </h2>
+          <Link className='text-base-content text-opacity-40' to={`/users/${login}`}>
+            Visit profile
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }
 
