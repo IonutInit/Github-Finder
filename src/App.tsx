@@ -4,6 +4,7 @@ import Footer from "./components/layout/Footer"
 import Alert from "./components/layout/Alert"
 import Home from "./components/pages/Home"
 import About from "./components/pages/About"
+import User from "./components/users/User"
 import NotFound from "./components/pages/NotFound"
 
 import { GithubProvider } from "./context/github/GithubContext"
@@ -11,7 +12,9 @@ import { AlertProvider } from "./context/alert/AlertContext"
 
 function App() {
   return (
-    <GithubProvider users={[]} loading={false} searchUsers={async () => {}} clearUsers={() => {}}>
+    <GithubProvider users={[]} loading={false} searchUsers={async () => {}} clearUsers={() => {}} user={{}} getUser={function (login: string | undefined): Promise<void> {
+      throw new Error("Function not implemented.")
+    } }>
       <AlertProvider alert={null} setAlert={function (msg: string, type: string): void {
         throw new Error("Function not implemented.")
       } }>
@@ -25,6 +28,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/user/:login" element={<User />} />
               <Route path="/notfound" element={<NotFound />} />
               <Route path="/*" element={<NotFound />} />
             </Routes>

@@ -2,10 +2,16 @@ export type Users = {
     [key: string]: string | number;
 }
 
+export type User = {
+    [key: string]: string | number | boolean;
+}
+
 export type GithubContextProps = {
     users: Users[];
+    user: User;
     loading: boolean;
     searchUsers: (text: string) => Promise<void>;
+    getUser: (login: string) => Promise<void>;
     clearUsers: () => void;
 }
 

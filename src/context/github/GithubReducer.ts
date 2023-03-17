@@ -1,7 +1,8 @@
-import { Users } from "../../types"
+import { Users, User} from "../../types"
 
 type GithubReducer = {
     users: Users[],
+    user: {},
     loading: boolean
 }
 
@@ -10,16 +11,28 @@ type Action = {
 }
 
 type ActionWithPayload = {
-    type: "GET_USERS",
+    type: "GET_USERS" | "GET_USER",
     payload: Users[],
 }
 
-const githubReducer = (state: GithubReducer, action: Action | ActionWithPayload) => {
+type GetSingleUser = {
+    type: "GET_USER",
+    payload: User[],
+    loading: boolean,
+}
+
+const githubReducer = (state: GithubReducer, action: Action | ActionWithPayload | GetSingleUser) => {
     switch(action.type) {
         case "GET_USERS":
             return {
                 ...state, 
                 users: action.payload,
+                loading: false,
+            }
+        case "GET_USER":
+            return {
+                ...state,
+                user: action.payload,
                 loading: false,
             }
         case "SET_LOADING":

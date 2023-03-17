@@ -6,9 +6,11 @@ import { GithubContextProps} from '../../types'
 
 const GithubContext = createContext<GithubContextProps>({
     users: [],
+    user: {},
     loading: false,
     searchUsers: async () => {},
     clearUsers: () => {},
+    getUser: async () => {},
 })
 
 const GITHUB_URL: string = import.meta.env.VITE_GITHUB_URL
@@ -17,7 +19,8 @@ const GITHUB_TOKEN: string = import.meta.env.VITE_GITHUB_TOKEN
 export const GithubProvider = ({children}: PropsWithChildren<GithubContextProps>) => {
     const initialState = {
         users: [],
-        loading: true
+        user: {},
+        loading: false,
     }
 
     const [state, dispatch] = useReducer(githubReducer, initialState)
@@ -44,6 +47,30 @@ export const GithubProvider = ({children}: PropsWithChildren<GithubContextProps>
         })
     }
 
+
+    //Get single user
+    const getUser = async (login: string) => {
+        setLoading()
+
+        const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`
+            }
+        })
+
+        if(response.status === 404) {
+            window.location.href = "/notfound"
+        } else {
+            const data = await response.json()
+    
+            dispatch({
+                type: "GET_USER",
+                payload: data,
+            })
+        }
+    }
+
+
     //Clear users from state
     const clearUsers = () => dispatch({type: "CLEAR_USERS"})
 
@@ -54,9 +81,11 @@ export const GithubProvider = ({children}: PropsWithChildren<GithubContextProps>
     return (
         <GithubContext.Provider value={{ 
             users: state.users, 
+            user: state.user,
             loading: state.loading, 
             searchUsers,
             clearUsers,
+            getUser,
             }}>
             {children}
         </GithubContext.Provider>)
