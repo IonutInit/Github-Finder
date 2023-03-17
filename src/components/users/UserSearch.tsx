@@ -1,24 +1,26 @@
-import {useState, useContext } from 'react'
-import GithubContext from '../../context/github/GithubContext'
-import AlertContext from '../../context/alert/AlertContext'
+import { useState, useContext } from "react";
+import GithubContext from "../../context/github/GithubContext";
+// eslint-disable-next-line import/no-named-as-default
+import AlertContext from "../../context/alert/AlertContext";
 
 function UserSearch() {
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
 
-  const {users, searchUsers, clearUsers} = useContext(GithubContext)
-  const {setAlert} = useContext(AlertContext)
+  const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setText(e.target.value);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (text === "") {
-      setAlert("Please enter something", "error") 
+      setAlert("Please enter something", "error");
     } else {
-      searchUsers(text)
-      setText("")
-    } 
-  }
+      searchUsers(text);
+      setText("");
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 xl:cols-2 lg:grid-cols-1 md:grid-cols-2 mb-8 gap-8">
@@ -33,24 +35,29 @@ function UserSearch() {
                 value={text}
                 onChange={handleChange}
               />
-              <button 
+              <button
                 type="submit"
-                className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg">
-                  Go
+                className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg"
+              >
+                Go
               </button>
             </div>
-          </div>  
-        </form>  
+          </div>
+        </form>
       </div>
-      {users.length > 0 && 
-        (<div>
-          <button onClick={clearUsers} className="btn btn-ghost btn-lg">
+      {users.length > 0 && (
+        <div>
+          <button
+            type="button"
+            onClick={clearUsers}
+            className="btn btn-ghost btn-lg"
+          >
             Clear
           </button>
-        </div>)
-      }
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default UserSearch
+export default UserSearch;
