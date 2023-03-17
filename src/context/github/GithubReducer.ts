@@ -1,10 +1,4 @@
-import { Users, User} from "../../types"
-
-type GithubReducer = {
-    users: Users[],
-    user: {},
-    loading: boolean
-}
+import { Users, User, Repos, GithubReducer} from "../../types"
 
 type Action = {
     type: "SET_LOADING" | "CLEAR_USERS"
@@ -12,7 +6,7 @@ type Action = {
 
 type ActionWithPayload = {
     type: "GET_USERS" | "GET_USER",
-    payload: Users[],
+    payload: Users[] 
 }
 
 type GetSingleUser = {
@@ -21,7 +15,12 @@ type GetSingleUser = {
     loading: boolean,
 }
 
-const githubReducer = (state: GithubReducer, action: Action | ActionWithPayload | GetSingleUser) => {
+type GetRepos = {
+    type: "GET_REPOS",
+    payload: Repos,
+}
+
+const githubReducer = (state: GithubReducer, action: Action | ActionWithPayload | GetSingleUser | GetRepos) => {
     switch(action.type) {
         case "GET_USERS":
             return {
@@ -33,6 +32,12 @@ const githubReducer = (state: GithubReducer, action: Action | ActionWithPayload 
             return {
                 ...state,
                 user: action.payload,
+                loading: false,
+            }
+        case "GET_REPOS":
+            return {
+                ...state,
+                repos: action.payload,
                 loading: false,
             }
         case "SET_LOADING":
@@ -48,14 +53,6 @@ const githubReducer = (state: GithubReducer, action: Action | ActionWithPayload 
         default:
             return state
     }
-
-    // if (action.type === 'GET_USERS') {
-    //     return {...state, users: action.payload, loading: false}
-    // }
-
-    // if (action.type === "SET_LOADING") {
-    //     return {...state, loading: true}
-    // }
 }
 
 export default githubReducer

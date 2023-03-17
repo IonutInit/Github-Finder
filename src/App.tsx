@@ -12,7 +12,9 @@ import { AlertProvider } from "./context/alert/AlertContext"
 
 function App() {
   return (
-    <GithubProvider users={[]} loading={false} searchUsers={async () => {}} clearUsers={() => {}} user={{}} getUser={function (login: string | undefined): Promise<void> {
+    <GithubProvider users={[]} loading={false} searchUsers={async () => { } } clearUsers={() => { } } user={{}} getUser={function (login: string | undefined): Promise<void> {
+      throw new Error("Function not implemented.")
+    } } repos={[]} getUserRepos={function (login: string): Promise<void> {
       throw new Error("Function not implemented.")
     } }>
       <AlertProvider alert={null} setAlert={function (msg: string, type: string): void {

@@ -8,9 +8,11 @@ const GithubContext = createContext<GithubContextProps>({
     users: [],
     user: {},
     loading: false,
+    repos: [],
     searchUsers: async () => {},
     clearUsers: () => {},
     getUser: async () => {},
+    getUserRepos: async () => {},
 })
 
 const GITHUB_URL: string = import.meta.env.VITE_GITHUB_URL
@@ -20,6 +22,7 @@ export const GithubProvider = ({children}: PropsWithChildren<GithubContextProps>
     const initialState = {
         users: [],
         user: {},
+        repos: [],
         loading: false,
     }
 
@@ -70,7 +73,28 @@ export const GithubProvider = ({children}: PropsWithChildren<GithubContextProps>
         }
     }
 
+    //Get user repos
+    const getUserRepos = async (login: string) => {
+        setLoading()
 
+        const params: URLSearchParams = new URLSearchParams({
+            sort: "created",
+            per_page: String(10),
+        })
+
+        const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`
+            }
+        })
+
+        const data = await response.json()
+    
+        dispatch({
+            type: "GET_REPOS",
+            payload: data,
+        })
+    }
     //Clear users from state
     const clearUsers = () => dispatch({type: "CLEAR_USERS"})
 
@@ -83,9 +107,11 @@ export const GithubProvider = ({children}: PropsWithChildren<GithubContextProps>
             users: state.users, 
             user: state.user,
             loading: state.loading, 
+            repos: state.repos,
             searchUsers,
             clearUsers,
             getUser,
+            getUserRepos,
             }}>
             {children}
         </GithubContext.Provider>)

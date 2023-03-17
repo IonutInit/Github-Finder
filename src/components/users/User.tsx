@@ -2,15 +2,17 @@ import {FaCodepen, FaStore, FaUserFriends, FaUsers} from "react-icons/fa"
 import { useEffect, useContext } from "react"
 import { useParams, Link} from "react-router-dom"
 import Spinner from "../layout/Spinner"
+import RepoList from "../repos/RepoList"
 import GithubContext from "../../context/github/GithubContext"
 
 function User() {
-    const {getUser, user, loading} = useContext(GithubContext)
+    const {getUser, user, loading, getUserRepos, repos} = useContext(GithubContext)
 
     const params = useParams()
 
     useEffect(() => {
         getUser(params.login ?? "")
+        getUserRepos(params.login ?? "")
     }, [])
 
     const {
@@ -20,9 +22,9 @@ function User() {
         location,
         bio,
         blog,
+        html_url,
         twitter_username,
         login,
-        html_url,
         followers,
         following,
         public_repos,
@@ -73,7 +75,7 @@ function User() {
                         </h1>
                         <p>{bio}</p>
                         <div className="mt-4 card-action">
-                            <a href="{html_url}" target="_blank" rel="noreffer" className="btn btn-outline">
+                            <a href={html_url.toString()} target="_blank" rel="noreferrer" className="btn btn-outline">
                                 Visit Github Profile
                             </a>
                         </div> 
@@ -128,10 +130,8 @@ function User() {
                         {followers}
                     </div>
                 </div>
-            </div>
 
-            <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats">
-                <div className="stat">
+                               <div className="stat">
                     <div className="stat-figure text-secondary">
                         <FaUserFriends className="text-3xl md:text-5xl"/>
                     </div>
@@ -142,12 +142,8 @@ function User() {
                         {following}
                     </div>
                 </div>
-            </div>
 
-
-
-            <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats">
-                <div className="stat">
+                 <div className="stat">
                     <div className="stat-figure text-secondary">
                         <FaCodepen className="text-3xl md:text-5xl"/>
                     </div>
@@ -158,10 +154,7 @@ function User() {
                         {public_repos}
                     </div>
                 </div>
-            </div>
 
-            
-            <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats">
                 <div className="stat">
                     <div className="stat-figure text-secondary">
                         <FaStore className="text-3xl md:text-5xl"/>
@@ -174,7 +167,8 @@ function User() {
                     </div>
                 </div>
             </div>
-
+ 
+            <RepoList repos={repos}/>
         </div>
     </>
   )
