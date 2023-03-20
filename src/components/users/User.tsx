@@ -75,7 +75,7 @@ function User() {
             <p>{bio}</p>
             <div className="mt-4 card-action">
               <a
-                href={html_url.toString()}
+                href={html_url?.toString()}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-outline"

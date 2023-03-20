@@ -14,14 +14,22 @@ function About() {
           here
         </a>{" "}
         and the repo of this version{" "}
-        <a href="" target="_blank" rel="noreferrer">
+        <a
+          href="https://github.com/IonutInit/Github-Finder"
+          target="_blank"
+          rel="noreferrer"
+        >
           here
         </a>
         .
       </p>
       <p>
         The Docker image is available{" "}
-        <a href="" target="_blank" rel="noreferrer">
+        <a
+          href="https://hub.docker.com/u/ionutinit"
+          target="_blank"
+          rel="noreferrer"
+        >
           here
         </a>
         .
